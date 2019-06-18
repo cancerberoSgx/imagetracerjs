@@ -1,7 +1,7 @@
 /*
-	imagetracer.js version 1.2.5
-	Simple raster image tracer and vectorizer written in JavaScript.
-	andras@jankovics.net
+imagetracer.js version 1.2.5
+Simple raster image tracer and vectorizer written in JavaScript.
+andras@jankovics.net
 */
 
 /*
@@ -35,11 +35,13 @@ For more information, please refer to http://unlicense.org/
 
 */
 
+
 (function(){ 'use strict';
 
 function ImageTracer(){
-	var _this = this;
-
+  var _this = this;
+  const PNGReader = require( 'png.js');
+  
 	this.versionnumber = '1.2.5',
 	
 	////////////////////////////////////////////////////////////
@@ -47,7 +49,34 @@ function ImageTracer(){
 	//  User friendly functions
 	//
 	////////////////////////////////////////////////////////////
-	
+  
+  
+
+ this.tracePngToSvg = 
+ 
+/**
+ * @param {Buffer} input 
+ */
+ async function tracePngToSvg(input, options) {
+   
+  function readPng(content) {
+    return new Promise((resolve, reject) => {
+    return new PNGReader(content).parse((error, png) => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve(png)
+      }
+    })
+  })
+}
+
+  const png = await this.readPng(input);
+  const outputContent = this.imagedataToSVG({ ...png, data: png.pixels }, options);
+  return outputContent;
+}
+
+
 	// Loading an image from a URL, tracing when loaded,
 	// then executing callback with the scaled svg string as argument
 	this.imageToSVG = function( url, callback, options ){

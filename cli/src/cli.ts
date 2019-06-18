@@ -3,8 +3,7 @@ import { existsSync, mkdirSync, readFileSync, writeFileSync } from 'fs'
 import { sync as glob } from 'glob'
 import { Options } from './options';
 import { basename, join } from 'path';
-import { serial, readPng } from './util';
-var ImageTracer = require('imagetracerjs');
+import { serial, tracePngToSvg } from './util';
 
 export async function traceImage(options: Options) {
   preconditions(options)
@@ -23,8 +22,7 @@ export async function traceImage(options: Options) {
   await serial(input.map(input => async () => {
     try {
       options.debug && console.log('Rendering ' + input.name)
-      const png = await readPng(input.content)
-      const outputContent = ImageTracer.imagedataToSVG({ ...png, data: png.pixels }, options)
+      const outputContent = await tracePngToSvg(input.content, options);
       if (options.output) {
         const outputFilePath = join(options.output, basename(input.name + '.' + (options.format || 'svg')))
         writeFileSync(outputFilePath, outputContent)
@@ -38,6 +36,7 @@ export async function traceImage(options: Options) {
     }
   }))
 }
+
 
 function preconditions(options: Options) {
   if (!options.input) {

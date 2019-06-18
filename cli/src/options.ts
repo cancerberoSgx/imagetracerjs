@@ -3,7 +3,7 @@ export interface Options {
   /**
     * Path or glob file pattern to .png files, relative to current dir.
     */
-  input: string | Buffer
+  input: string 
 
   /**
    * Folder for output files. If it doesn't exists it will be created. If none, output files will be written
