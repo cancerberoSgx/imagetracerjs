@@ -5,4 +5,4 @@ export * from './options'
 
 // export {imagedataToSVG}
 
-export {tracePngToSvg} from './util'
+// export {tracePngToSvg} from './util'

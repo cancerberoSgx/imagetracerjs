@@ -40,8 +40,10 @@ For more information, please refer to http://unlicense.org/
 
 function ImageTracer(){
   var _this = this;
-  const PNGReader = require( 'png.js');
+  // const PNGReader = require( 'png.js');
   
+  var Jimp = require('jimp');
+
 	this.versionnumber = '1.2.5',
 	
 	////////////////////////////////////////////////////////////
@@ -50,30 +52,37 @@ function ImageTracer(){
 	//
 	////////////////////////////////////////////////////////////
   
-  
 
- this.tracePngToSvg = 
+ this.traceImage = 
  
 /**
  * @param {Buffer} input 
  */
- async function tracePngToSvg(input, options) {
+ function (input, options) {
 
-  function readPng(content) {
-    return new Promise((resolve, reject) => {
-    return new PNGReader(content).parse((error, png) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(png)
-      }
-    })
-  })
-}
+  return Jimp.read(input).then(image=>
+     {
+       console.log(image.bitmap.width, image.bitmap.height);
+       
+       return Promise.resolve(this.imagedataToSVG( image.bitmap, options))
+    }
+  )
 
-  const png = await readPng(input);
-  const outputContent = this.imagedataToSVG({ ...png, data: png.pixels }, options);
-  return outputContent;
+//   function readPng(content) {
+//     return new Promise((resolve, reject) => {
+//     return new PNGReader(content).parse((error, png) => {
+//       if (error) {
+//         reject(error)
+//       } else {
+//         resolve(png)
+//       }
+//     })
+//   })
+// }
+
+//   const png = await readPng(input);
+//   const outputContent = this.imagedataToSVG({ ...png, data: png.pixels }, options);
+//   return outputContent;
 }
 
 

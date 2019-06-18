@@ -16,23 +16,25 @@ export function serial<T = any>(p: (() => Promise<T>)[]): Promise<T[]> {
   })
 }
 
-type PNG = PNGReader['png']
+// // type PNG = PNGReader['png']
+// import Jimp from 'jimp';
+// var ImageTracer = require('imagetracerjs');
+// export function readPng(content: Buffer): Promise<PNG> {
+//   const img = await 
+//   return new Promise((resolve, reject) => {
 
-var ImageTracer = require('imagetracerjs');
-export function readPng(content: Buffer): Promise<PNG> {
-  return new Promise((resolve, reject) => {
-    return new PNGReader(content).parse((error, png) => {
-      if (error) {
-        reject(error)
-      } else {
-        resolve(png)
-      }
-    })
-  })
-}
+//     return new PNGReader(content).parse((error, png) => {
+//       if (error) {
+//         reject(error)
+//       } else {
+//         resolve(png)
+//       }
+//     })
+//   })
+// }
 
-export async function tracePngToSvg(input: Buffer, options: Options) {
-  const png = await readPng(input);
-  const outputContent = ImageTracer.imagedataToSVG({ ...png, data: png.pixels }, options);
-  return outputContent;
-}
+// export async function tracePngToSvg(input: Buffer, options: Options) {
+//   const png = await readPng(input);
+//   const outputContent = ImageTracer.imagedataToSVG({ ...png, data: png.pixels }, options);
+//   return outputContent;
+// }
