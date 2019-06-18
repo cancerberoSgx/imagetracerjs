@@ -58,7 +58,7 @@ function ImageTracer(){
  * @param {Buffer} input 
  */
  async function tracePngToSvg(input, options) {
-   
+
   function readPng(content) {
     return new Promise((resolve, reject) => {
     return new PNGReader(content).parse((error, png) => {
@@ -71,7 +71,7 @@ function ImageTracer(){
   })
 }
 
-  const png = await this.readPng(input);
+  const png = await readPng(input);
   const outputContent = this.imagedataToSVG({ ...png, data: png.pixels }, options);
   return outputContent;
 }
